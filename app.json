@@ -1,5 +1,8 @@
 {
   "expo": {
-    "sdkVersion": "19.0.0"
+    "sdkVersion": "19.0.0",
+    "packagerOpts": {
+      "config": "rn-cli.config.js"
+    }
   }
 }
