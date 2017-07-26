@@ -4,9 +4,7 @@ export default function dbCall(sql, db, context) {
 			tx.executeSql(
 				sql,
 				[],
-				(_, { rows: { _array } }) => {
-					resolve(_array)
-				},
+				(_, { rows: { _array } }) => resolve(_array),
 				(_, error) => {
 					reject(error)
 				}
