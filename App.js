@@ -1,62 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import { StyleSheet, Text, ScrollView, Button, View } from 'react-native';
 // Shim those nodejs packages for join-monster
 import './global'
 import { graphql } from 'graphql'
-import schema from './graphql/schema/index.js'
+import nonRelaySchema from './graphql/schema/index.js'
+import relaySchema from './graphql/relay-schema/index.js'
 
 export default class App extends React.Component {
 
   state = {
-    rows: null,
+    graphqlResponseData: null,
+    error: null
   };
 
-  componentDidMount() {
+  _query = (isRelayQuery) => {
 
-    const query = `{
-      users {
-        ...UserInfo
-        posts {
-          id
-          body
-          comments {
-            body
-            author {
-              ... UserInfo
-              following {
-                id
-              }
-            }
-          }
-        }
-      }
-    }
-
-    fragment UserInfo on User {
-      id, fullName, email
-    }
-    `
-
+    const schema = isRelayQuery ? relaySchema : nonRelaySchema
+    const query = isRelayQuery ? relayQuery : nonRelayQuery
     graphql(schema, query)
     	.then((response) => {
-        const rows = response.data.users ? response.data.users : response.data
-        console.log('rows')
-        this.setState({ rows })
+        const graphqlResponseData = response.data.users || response.data
+        this.setState({ graphqlResponseData })
       })
-    	.catch(error => console.log('graphql error', error))
+    	.catch(error => this.setState({ error }))
   }
 
   render() {
     return (
       <ScrollView style={styles.container}>
+        <Text>Press a button to run a query</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Button 
+            onPress={() => this._query(false)} 
+            title='Non-Relay Query'
+          />
+          <Button 
+            onPress={() => this._query(true)}
+            title='Relay Query'
+          />
+        </View>
         <Text>Data from local join monster:</Text>
         {
-          this.state.rows ?
-            this.state.rows.map( row =>
+          Array.isArray(this.state.graphqlResponseData) ?
+            this.state.graphqlResponseData.map( row =>
               <Text key={row.id}>{ JSON.stringify(row, null, 4) }</Text>
-            )
-          : null
+            ) 
+            : <Text>{ JSON.stringify(this.state.graphqlResponseData, null, 4) }</Text>
         }
+        <Text>Errors:</Text>
+        { <Text>{ JSON.stringify(this.state.error, null, 4) }</Text>}
       </ScrollView>
     );
   }
@@ -69,3 +61,67 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+const nonRelayQuery = `{
+  users {
+    ...UserInfo
+    posts {
+      id
+      body
+      comments {
+        body
+        author {
+          ... UserInfo
+          following {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment UserInfo on User {
+  id, fullName, email
+}
+`
+
+const relayQuery = `
+  {
+    version
+    user {
+      email
+      fullName
+      following {
+        edges {
+          node {
+            fullName
+          }
+        }
+      }
+      comments {
+        edges {
+          node {
+            body
+            id
+          }
+        }
+      }
+      posts {
+        edges {
+          node {
+            body
+            id
+            comments {
+              edges {
+                node {
+                  body
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

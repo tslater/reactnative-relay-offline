@@ -1,0 +1,29 @@
+{
+  node(id: "UG9zdDoz") {
+    ... on Post { body }
+  }
+  user(id: 2) {
+    posts {
+      pageInfo {
+        hasNextPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node { id, body }
+      }
+    }
+    comments(first: 2, after: "YXJyYXljb25uZWN0aW9uOjA=") {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node { id, body }
+      }
+    }
+  }
+}
+
