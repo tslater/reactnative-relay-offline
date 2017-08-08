@@ -1,0 +1,166 @@
+# Comments on posts
+type Comment implements Node {
+  # The ID of an object
+  id: ID!
+
+  # The content of the comment
+  body: String
+
+  # Users who liked this comment
+  likers: [User]
+
+  # The post that the comment belongs to
+  post: Post
+
+  # The user who wrote the comment
+  author: User
+  archived: Boolean
+  createdAt: String
+}
+
+# A connection to a list of items.
+type CommentConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [CommentEdge]
+  total: Int
+}
+
+# An edge in a connection.
+type CommentEdge {
+  # The item at the end of the edge
+  node: Comment
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type LuckyNumber {
+  value: Float
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# A post from a user
+type Post implements Node {
+  # The ID of an object
+  id: ID!
+
+  # The content of the post
+  body: String
+
+  # The user that created the post
+  author: User
+
+  # The comments on this post
+  comments(after: String, first: Int): CommentConnection
+  commentsWithoutJoin: [SimpleComment]
+  archived: Boolean
+  createdAt: String
+}
+
+# A connection to a list of items.
+type PostConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [PostEdge]
+}
+
+# An edge in a connection.
+type PostEdge {
+  # The item at the end of the edge
+  node: Post
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# global query object
+type Query {
+  version: String
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+  user(
+    # The users ID number
+    id: Int
+  ): User
+}
+
+# comments on the post without join capabilities
+type SimpleComment {
+  # The ID of an object
+  id: ID!
+  body: String
+  authorId: Int
+  postId: Int
+  archived: Boolean
+  createdAt: String
+}
+
+# a stem contract account
+type User implements Node {
+  # The ID of an object
+  id: ID!
+  email: String
+
+  # A user's first and last name
+  fullName: String
+  fullNameAnotherWay: String
+
+  # A list of Posts the user has written
+  posts(after: String, first: Int, before: String, last: Int): PostConnection
+
+  # Comments the user has written on people's posts
+  comments(after: String, first: Int): CommentConnection
+
+  # Users that this user is following
+  following(after: String, first: Int, before: String, last: Int): UserConnection
+  favNums: [Int]
+  luckyNumber: LuckyNumber
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserEdge]
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge
+  node: User
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
