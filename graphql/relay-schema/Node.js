@@ -7,9 +7,9 @@ import joinMonster from 'join-monster'
 
 import database from '../data/database'
 import dbCall from '../data/fetch'
+import sqlite3Module from 'join-monster/dist/stringifiers/dialects/sqlite3'
 
-const options = { dialect: 'sqlite3' }
-
+const options = { dialectModule: sqlite3Module }
 // create the node type and interface
 const { nodeInterface, nodeField } = nodeDefinitions(
   // this function resolves an ID to an object
@@ -25,4 +25,3 @@ const { nodeInterface, nodeField } = nodeDefinitions(
 )
 
 export { nodeInterface, nodeField }
-

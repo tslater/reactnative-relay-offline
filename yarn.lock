@@ -3159,9 +3159,9 @@ join-component@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/join-component/-/join-component-1.1.0.tgz#b8417b750661a392bee2c2537c68b2a9d4977cd5"
 
-join-monster@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/join-monster/-/join-monster-2.0.3.tgz#ecb57a0dde6be8b869cd4cdcf25f8c01dd7e55b9"
+join-monster@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/join-monster/-/join-monster-2.0.4.tgz#0e9ae4b56b4f625145723cc76417e1f2c780cf54"
   dependencies:
     "@stem/nesthydrationjs" "0.4.0"
     debug "^2.6.8"

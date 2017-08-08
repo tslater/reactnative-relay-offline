@@ -10,8 +10,9 @@ import database from '../data/database'
 import User from './User'
 import { nodeField } from './Node'
 import dbCall from '../data/fetch'
+import sqlite3Module from 'join-monster/dist/stringifiers/dialects/sqlite3'
 
-const options = { dialect: 'sqlite3' }
+const options = { dialectModule: sqlite3Module }
 
 export default new GraphQLObjectType({
   description: 'global query object',
