@@ -13,6 +13,7 @@ export type PostList_posts = {|
     +node: ?{|
       +body: ?string;
       +id: string;
+      +likes: ?number;
     |};
   |}>;
 |};
@@ -53,6 +54,13 @@ const fragment /*: ConcreteFragment*/ = {
               "alias": null,
               "args": null,
               "name": "id",
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "likes",
               "storageKey": null
             }
           ],

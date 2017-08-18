@@ -18,7 +18,6 @@ export default class RelayExample extends React.Component {
           if (error) {
             return <Text>{ error.message }</Text>
           } else if (props) {
-            console.log(`camels`, props)
             return (
               <View>
                 <UserProfile user={props.user}/>
@@ -35,7 +34,8 @@ export default class RelayExample extends React.Component {
 
 const relayQuery = graphql`
  query RelayExampleUserQuery {
-    user {
+    user(id: 1) {
+      id,
       email
       fullName
       posts{

@@ -13,6 +13,7 @@ class PostList extends React.Component{
         {posts.edges.map(({node})=>
           <View key={node.id} style={styles.listItem} >
             <Text>{node.body}</Text>
+            <Text style={styles.itemCount}>Likes: {node.likes}</Text>
           </View>
         )}
       </ScrollView>
@@ -25,7 +26,13 @@ const styles = StyleSheet.create({
     margin: 4,
     padding: 20,
     borderWidth: 1,
-  }
+  },
+  itemCount: {
+    fontSize: 10,
+    position: "absolute",
+    right: 1,
+    top: 1,
+  },
 });
 
 export default createFragmentContainer(PostList, graphql`
@@ -33,7 +40,8 @@ export default createFragmentContainer(PostList, graphql`
       edges {
         node {
           body,
-          id
+          id,
+          likes,
         }
       }
   }

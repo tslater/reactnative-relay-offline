@@ -37,10 +37,6 @@ type CommentEdge {
   cursor: String!
 }
 
-type LuckyNumber {
-  value: Float
-}
-
 # An object with an ID
 interface Node {
   # The id of the object.
@@ -78,6 +74,7 @@ type Post implements Node {
   commentsWithoutJoin: [SimpleComment]
   archived: Boolean
   createdAt: String
+  likes: Int
 }
 
 # A connection to a list of items.
@@ -143,7 +140,6 @@ type User implements Node {
   # Users that this user is following
   following(after: String, first: Int, before: String, last: Int): UserConnection
   favNums: [Int]
-  luckyNumber: LuckyNumber
 }
 
 # A connection to a list of items.
@@ -163,4 +159,3 @@ type UserEdge {
   # A cursor for use in pagination
   cursor: String!
 }
-

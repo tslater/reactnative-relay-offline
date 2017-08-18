@@ -6,8 +6,10 @@ const {
 } = require('relay-runtime')
 import '../global'
 
-import { graphql } from 'graphql'
+import { graphql, printSchema } from 'graphql'
 import schema from '../graphql/relay-schema/index.js'
+
+// console.log('schemmmas',printSchema(schema))
 
 const store = new Store(new RecordSource())
 const network = Network.create((operation, variables) =>

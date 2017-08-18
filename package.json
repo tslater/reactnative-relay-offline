@@ -1,5 +1,5 @@
 {
-  "name": "reactnative-relay-offline",
+  "name": "sync-test",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 407137dc65fca67c2cd6d47381d12cf4
+ * @relayHash c17cae3fa3f31116f70c503a2277f27f
  */
 
 /* eslint-disable */
@@ -11,6 +11,7 @@
 import type {ConcreteBatch} from 'relay-runtime';
 export type RelayExampleUserQueryResponse = {|
   +user: ?{|
+    +id: string;
     +email: ?string;
     +fullName: ?string;
     +posts: ?{| |};
@@ -21,13 +22,13 @@ export type RelayExampleUserQueryResponse = {|
 
 /*
 query RelayExampleUserQuery {
-  user {
+  user(id: 1) {
+    id
     email
     fullName
     posts {
       ...PostList_posts
     }
-    id
   }
 }
 
@@ -36,6 +37,7 @@ fragment PostList_posts on PostConnection {
     node {
       body
       id
+      likes
     }
   }
 }
@@ -51,11 +53,25 @@ const batch /*: ConcreteBatch*/ = {
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "id",
+            "value": 1,
+            "type": "Int"
+          }
+        ],
         "concreteType": "User",
         "name": "user",
         "plural": false,
         "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "id",
+            "storageKey": null
+          },
           {
             "kind": "ScalarField",
             "alias": null,
@@ -87,7 +103,7 @@ const batch /*: ConcreteBatch*/ = {
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "user{\"id\":1}"
       }
     ],
     "type": "Query"
@@ -105,11 +121,25 @@ const batch /*: ConcreteBatch*/ = {
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "id",
+            "value": 1,
+            "type": "Int"
+          }
+        ],
         "concreteType": "User",
         "name": "user",
         "plural": false,
         "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "id",
+            "storageKey": null
+          },
           {
             "kind": "ScalarField",
             "alias": null,
@@ -161,6 +191,13 @@ const batch /*: ConcreteBatch*/ = {
                         "args": null,
                         "name": "id",
                         "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "likes",
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -170,20 +207,13 @@ const batch /*: ConcreteBatch*/ = {
               }
             ],
             "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "id",
-            "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "user{\"id\":1}"
       }
     ]
   },
-  "text": "query RelayExampleUserQuery {\n  user {\n    email\n    fullName\n    posts {\n      ...PostList_posts\n    }\n    id\n  }\n}\n\nfragment PostList_posts on PostConnection {\n  edges {\n    node {\n      body\n      id\n    }\n  }\n}\n"
+  "text": "query RelayExampleUserQuery {\n  user(id: 1) {\n    id\n    email\n    fullName\n    posts {\n      ...PostList_posts\n    }\n  }\n}\n\nfragment PostList_posts on PostConnection {\n  edges {\n    node {\n      body\n      id\n      likes\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

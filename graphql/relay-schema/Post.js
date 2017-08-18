@@ -2,7 +2,8 @@ import {
   GraphQLObjectType,
   GraphQLList,
   GraphQLString,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLInt,
 } from 'graphql'
 
 import {
@@ -66,11 +67,14 @@ export const Post = new GraphQLObjectType({
     createdAt: {
       type: GraphQLString,
       sqlColumn: 'created_at'
-    }
+    },
+    likes: {
+      type: GraphQLInt,
+      sqlColumn: 'likes'
+    },
   })
 })
 
 // create the connection type from the post
 const { connectionType: PostConnection } = connectionDefinitions({ nodeType: Post })
 export { PostConnection }
-
