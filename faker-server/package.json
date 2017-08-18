@@ -1,0 +1,10 @@
+{
+  "name": "faker-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "json-schema-faker": "^0.4.3",
+    "restify": "^5.1.0"
+  }
+}
